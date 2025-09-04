@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+import org.json.JSONObject;
+
+import fr.ensibs.io.JsonLoader;
 import fr.ensibs.io.PropertiesLoader;
 
 /**
@@ -21,13 +24,13 @@ public class Main
      */
     public static void main(String[] args) throws IOException 
     {
-        // open the hello.properties resource
-        try (InputStream in = Main.class.getResourceAsStream("/hello.properties")) {
-            // load the properties
-            PropertiesLoader loader = new PropertiesLoader();
-            Properties props = loader.load(in);
+        // open the hello.json resource
+        try (InputStream in = Main.class.getResourceAsStream("/hello.json")) {
+            // load the JSON object
+            JsonLoader loader = new JsonLoader();
+            JSONObject obj = loader.load(in);
             // display the message
-            System.out.println(props.getProperty("message"));
+            System.out.println(obj.getString("message"));
         }
     }
 }
