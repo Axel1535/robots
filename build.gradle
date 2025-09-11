@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'fr.ensibs'
+version = '3.0' // on est en v3 maintenant
+
+java {
+    toolchain { languageVersion = JavaLanguageVersion.of(17) }
+}
+
+application {
+    mainClass = 'fr.ensibs.hello.Main'
+}
+
+// IMPORTANT: déposer la lib depuis un repo public
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.json:json:20231013' // version courante suffisante pour le TP
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+jar {
+    manifest { attributes('Main-Class': application.mainClass.get()) }
+    // src/main/resources est inclus automatiquement
+}
