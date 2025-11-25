@@ -85,10 +85,6 @@ public class Robot extends Droid {
         this.radarHeading = this.radarHeading % 360;
     }
     
-    public String getName() {
-        return super.name;
-    }
-
     @Override
     public String toString() {
         return "Robot " + getName() + " [Energy=" + energy + ", GunHeat=" + gunHeat + ", RadarAngle=" + radarHeading + "]";

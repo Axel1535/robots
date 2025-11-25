@@ -42,9 +42,33 @@ public class Droid {
     public double getY() {
         return y;
     }
-    
+
+    public String getName() {
+        return name;
+    }
+
     public double getEnergy() {
         return energy;
+    }
+
+    public void addEnergy(double amount) {
+        if (amount < 0) return;
+        this.energy += amount;
+    }
+
+    public void takeDamage(double amount) {
+        this.energy -= amount;
+        
+        // On s'assure que l'énergie ne tombe pas sous 0
+        if (this.energy < 0) {
+            this.energy = 0;
+        }
+
+        if (!isAlive()) {
+            System.out.println(name + " a été détruit !");
+        } else {
+            System.out.println(name + " subit " + amount + " dégâts. Energie restante : " + this.energy);
+        }
     }
 
     public boolean isAlive() {
@@ -91,24 +115,31 @@ public class Droid {
     public void fire(double power) {
         if (!isAlive()) return;
 
-        // Vérification de la surchauffe
+        // 1. Vérifier la surchauffe
         if (this.gunHeat > 0) {
-            System.out.println(name + " ne peut pas tirer : Canon en surchauffe !");
+            System.out.println(name + " ne peut pas tirer (Surchauffe) !");
             return;
         }
 
-        // Vérification de l'énergie disponible
+        // 2. Gérer l'énergie
         if (power > this.energy) {
-            power = this.energy; // On ne peut tirer que ce qu'on a
+            power = this.energy;
         }
 
-        // Consommation de l'énergie
+        // 3. Consommer l'énergie et chauffer
         this.energy -= power;
-
-        // Augmentation de la chauffe (formule arbitraire : 1 + power/5)
         this.gunHeat += 1.0 + (power / 5.0);
 
-        System.out.println(name + " tire avec une puissance de " + power + ". Énergie restante : " + this.energy);
+        // --- CRÉATION ET ENVOI DE LA BALLE (C'est la partie qui vous manque) ---
+        if (battlefield != null) {
+            // Créer la balle à la position du robot, avec l'angle du canon
+            Bullet bullet = new Bullet(this, x, y, gunHeading, power);
+            
+            // L'ajouter au champ de bataille pour qu'elle existe dans le jeu
+            battlefield.addBullet(bullet);
+            
+            System.out.println(name + " tire une balle (Puissance " + power + ")");
+        }
     }
 
     public void update() {
