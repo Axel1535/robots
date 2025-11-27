@@ -63,13 +63,13 @@ public class Robot extends Droid {
                 angleToTargetDeg += 360.0;
             }
 
-            // Vérifie si cet angle est dans la zone du radar 
+            // Vérifier si cet angle est dans la zone du radar 
             double diff = Math.abs(angleToTargetDeg - this.getRadarHeading());
             if (diff > 180) {
                 diff = 360 - diff;
             }
 
-            // Si la différence est inférieure à la moitié du champ de vision, on le voit !
+            // Si la différence est inférieure à la moitié du champ de vision (j'ai mis 20° donc 10° de chaque côté)
             if (diff <= RADAR_FOV / 2.0) {
                 System.out.println(" !!! ENNEMI DÉTECTÉ : " + ((other instanceof Robot) ? ((Robot)other).getName() : "Droid") + " à " + String.format("%.1f", diff) + " degrés du centre du radar.");
             }

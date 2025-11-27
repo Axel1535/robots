@@ -115,29 +115,25 @@ public class Droid {
     public void fire(double power) {
         if (!isAlive()) return;
 
-        // 1. Vérifier la surchauffe
+        // Vérifier la surchauffe
         if (this.gunHeat > 0) {
             System.out.println(name + " ne peut pas tirer (Surchauffe) !");
             return;
         }
 
-        // 2. Gérer l'énergie
+        // Gérer l'énergie
         if (power > this.energy) {
             power = this.energy;
         }
 
-        // 3. Consommer l'énergie et chauffer
+        // Consommer l'énergie et chauffer
         this.energy -= power;
         this.gunHeat += 1.0 + (power / 5.0);
 
-        // --- CRÉATION ET ENVOI DE LA BALLE (C'est la partie qui vous manque) ---
+        // création et envoie balle 
         if (battlefield != null) {
-            // Créer la balle à la position du robot, avec l'angle du canon
             Bullet bullet = new Bullet(this, x, y, gunHeading, power);
-            
-            // L'ajouter au champ de bataille pour qu'elle existe dans le jeu
             battlefield.addBullet(bullet);
-            
             System.out.println(name + " tire une balle (Puissance " + power + ")");
         }
     }
